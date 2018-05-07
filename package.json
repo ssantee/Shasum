@@ -1,0 +1,21 @@
+{
+  "name": "hasher",
+  "version": "1.0.0",
+  "description": "Quick Hasher",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "babel src --out-dir build --source-maps inline"
+  },
+  "repository": "",
+  "keywords": [
+    
+  ],
+  "author": "Steven Santee",
+  "license": "",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "electron": "^1.8.4"
+  }
+}
