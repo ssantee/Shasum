@@ -48,8 +48,9 @@ input{
 }
 
 .file-section{
-    padding: 1em 0;
+    padding: 1em .5em;
     font-size: 1em;
+    box-shadow: inset 0px 0px 8px 1px #d8d8d8;
 }
 
 .file--hash--label.valid-match{
