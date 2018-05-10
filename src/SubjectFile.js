@@ -45,7 +45,7 @@ class SubjectFile{
     compareHashTo( inputHash, objectId ){
 
         return ;
-    }    
+    }
 }
 
 module.exports = SubjectFile;

@@ -4,6 +4,39 @@ body{
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+.done{
+    text-decoration: line-through;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.app-body{
+    width: 100%;
+}
+
+.col-4{
+    float:left;
+    width: 33.3%;
+}
+
+.col-8{
+    float: left;
+    width: 66.6%
+}
+
+.app-menu label{
+    display: block;
+    width: 100%;
+}
+
 input{
     font-size: 1em;
     line-height: 1.5;
@@ -31,22 +64,28 @@ input{
     font-weight: bold;
 }
 
-.file-section input{
+.file--input,.file-section input{
     width: 100%;
-    
+    overflow: visible;
 }
 
 .file--hash-output{
     text-indent: 2px;
+    overflow: visible;
+}
+
+.file--overflow--group{
+    overflow: scroll;
+    
 }
 
 /* loading animations */
 .load-wrapp {
     float: left;
     width: 100px;
-    height: 100px;
+    height: 6px;
     margin: 0 10px 10px 0;
-    padding: 20px 20px 20px;
+    
     border-radius: 5px;
     text-align: center;
     background-color: #d8d8d8;

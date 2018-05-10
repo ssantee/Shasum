@@ -11,17 +11,17 @@ const validHashes = [
 
 class Hasher{
     constructor( hashType ){
-
-        if( this.checkValidHash( hashType ) ){
+        
+        //if( this.checkValidHash( hashType ) ){
 
             this.hashType = hashType;
 
             this.hash = crypto.createHash( hashType );
-        }
-        else{
+        //}
+        //else{
 
-            throw new Error( 'Invalid hash type passed to Hasher constructor', 'Hasher.js' );
-        }
+          //  throw new Error( 'Invalid hash type passed to Hasher constructor', 'Hasher.js' );
+        //}
     }
 
     checkValidHash( input ){

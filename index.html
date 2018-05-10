@@ -3,33 +3,63 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Hasher</title>
     <link href="main.css" rel="stylesheet" />
 </head>
 
 <body>
-    <div>
-        <!-- All of the Node.js APIs are available in this renderer process. -->
+    <!--<div>
+    
         We are using Node.js
         <script>document.write(process.versions.node)</script>, Chromium
         <script>document.write(process.versions.chrome)</script>, and Electron
         <script>document.write(process.versions.electron)</script>.
-    </div>
-    <div class="todo">
-        <ul>
-            <li>File Picker</li>
-            <li>equality check on generated and provided checksum</li>
-            <li>Export results to plaintext</li>
-            <li>Let hash types be picked in the UI, from available list on OS<br> openssl list-message-digest-algorithms</li>
-        </ul>
-    </div>
-    <div id="holder">
-        Drag your file here
-    </div>
-    <div id="output">
-
+    </div>-->
+    
+    <div class="app-body clearfix">
+        
+        <div class="col-4">
+            <h2>Enabled Ciphers</h2>
+            <div class="app-menu menu" id="app-menu-enabled">
+            </div>
+            <h2>Available Ciphers</h2>
+            <div class="app-menu menu" id="app-menu">
+            </div>
+        </div>
+        <div class="col-8">
+            <div id="holder">
+                Drag your file here
+            </div>
+            <div id="output">
+        
+            </div>
+        </div>
     </div>
     
+    
+    <div class="todo">
+            <ul>
+                <li>File Picker</li>
+                <li class="done">equality check on generated and provided checksum</li>
+                <li>Export results to plaintext</li>
+                <li class="done">Let hash types be picked in the UI, from available list on OS<br> openssl list-message-digest-algorithms<br>
+                    console.log(crypto.getHashes())<br>
+                    https://stackoverflow.com/questions/14168703/crypto-algorithm-list
+                </li>
+                <li>sort enabled ciphers case-insensitive</li>
+                <li>rethinkg layout 
+                    <ul>
+                        <li>
+                            - cipher picker should be shown on demand, ie behind menu
+                        </li>
+                        <li></li>
+                    </ul>
+                </li>
+                <li>store enabled ciphers between sessions</li>
+                <li>store an operation/results history list</li>
+            </ul>
+        </div>
+
     <script>
         // You can also require other files to run in this process
         require('./renderer.js')

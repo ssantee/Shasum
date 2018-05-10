@@ -6,6 +6,7 @@ const electron = require('electron')
 
 const Hasher = require( './build/Hasher' );
 const SubjectFile = require( './build/SubjectFile' );
+const HashMenu = require( './build/HashMenu' );
 const utils = require( './build/Utils' );
 
 const objSectionMarker = 'obj-section-id-';
@@ -23,6 +24,32 @@ var requiredHashes = [
     'sha256',
     'sha512'
 ];
+
+var menu = new HashMenu();
+
+document.getElementById( 'app-menu' ).innerHTML = menu.getRenderedMenuItems();
+
+var menuOpts = document.getElementById( 'app-menu' ).getElementsByTagName( 'input' );
+
+const menuHandler = function( event ){
+
+    var target = event.target,
+        val = target.value;
+
+    if( target.checked ){
+
+        var renderedEnabled = menu.addEnabledItem( val );
+
+        document.getElementById( 'app-menu-enabled' ).innerHTML = renderedEnabled;
+    }
+};
+
+for( var x = 0; x < menuOpts.length; x++ ){
+
+    menuOpts[x].addEventListener( 'change', menuHandler );
+}
+
+document.getElementById( 'app-menu-enabled' ).innerHTML = menu.renderEnabledItems();
 
 var fileObjects = [];
 
@@ -84,30 +111,29 @@ window.compareSums = function( ){
     }
 };
 
-const setupDisplay = function( fileObj ){
+const setupDisplay = function( fileObj, hashItems ){
 
     console.log( fileObj );
 //todo this should be generated per hash type.
 //as it is, logic can crash if there is no section
 //allocated for the hash type
     var output = `<div class="file-section" id="${fileObj.uiselector}">
-                    <div class="file--name">${fileObj.filePath}</div>
-                    <div class="file--hash--output file--hash--output--md5">
-                        <div class="file--hash--label">MD5</div>
-                        <div class="file--md5 file--hash-output">${loading}</div>
-                        <div class="file--input file--input--md5"><input onchange="compareSums()" data-type="md5" class="file--input--verify" type="text" /></div>
-                    </div>
-                    <div class="file--hash--output file--hash--output--sha256">
-                        <div class="file--hash--label">SHA256</div>
-                        <div class="file--sha256 file--hash-output" id="">${loading}</div>
-                        <div class="file--input file--input--sha256"><input onchange="compareSums()" data-type="sha256" class="file--input--verify" type="text" /></div>
-                    </div>
-                    <div class="file--hash--output file--hash--output--sha512">
-                        <div class="file--hash--label">SHA512</div>
-                        <div class="file--sha512 file--hash-output" id="">${loading}</div>
-                        <div class="file--input file--input--sha256"><input onchange="compareSums()" data-type="sha512" class="file--input--verify" type="text" /></div>
-                    </div>
-                </div>`;
+                   <div class="file--name">${fileObj.filePath}</div>`;
+
+    hashItems.forEach( ( hashType ) => {
+
+        output += `
+            <div class="file--hash--output file--hash--output--${hashType}">
+                <div class="file--hash--label">${hashType}</div>
+                <div class="file--overflow--group">
+                    <div class="file--${hashType} file--hash-output" id="">${loading}</div>
+                    <div class="file--input file--input--${hashType}"><input onchange="compareSums()" data-type="${hashType}" class="file--input--verify" type="text" /></div>
+                </div>
+            </div>
+        `;
+    } );
+                    
+    output += `</div>`;
 
     var content = document.getElementById( 'output' ).innerHTML;
 
@@ -125,13 +151,15 @@ document.addEventListener('drop', function ( e ) {
   
         const subjectFile = new SubjectFile( f.path, objSectionMarker, renderHash );
 
-        setupDisplay( subjectFile );
+        var enabledItems = menu.getEnabledItems();
+
+        setupDisplay( subjectFile, enabledItems );
 
         //subjectFile.setHashes( Hasher, renderHash );
 
         fileObjects.push( subjectFile );
 
-        requiredHashes.forEach( ( hashType )=>{
+        enabledItems.forEach( ( hashType )=>{
 
             let myhasher = new Hasher( hashType );
             
