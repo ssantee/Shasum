@@ -31,7 +31,7 @@ class HashMenu{
 
         this.enabledItemsRendered = '';
 
-        this.enabledItems.sort();
+        this.enabledItems.sort( (a, b) => a.localeCompare(b) );
 
         this.enabledItems.forEach( ( e, i, arr ) => {
             
@@ -46,9 +46,22 @@ class HashMenu{
         return this.enabledItems;
     }
 
+    disableItem( item ){
+
+        if( this.enabledItems.indexOf( item ) !== -1 ){
+
+            this.enabledItems.splice( this.enabledItems.indexOf( item ), 1 );
+        }
+
+        return this.renderEnabledItems();
+    }
+
     addEnabledItem( newItem ){
 
-        this.enabledItems.push( newItem );
+        if( this.enabledItems.indexOf( newItem ) === -1 ){
+
+            this.enabledItems.push( newItem );
+        }
         //store these settings somewhere?
         return this.renderEnabledItems();
     }

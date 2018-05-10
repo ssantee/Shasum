@@ -42,6 +42,11 @@ const menuHandler = function( event ){
 
         document.getElementById( 'app-menu-enabled' ).innerHTML = renderedEnabled;
     }
+    else{
+
+        //already in enabled items, remove
+        document.getElementById( 'app-menu-enabled' ).innerHTML = menu.disableItem( val );
+    }
 };
 
 for( var x = 0; x < menuOpts.length; x++ ){
