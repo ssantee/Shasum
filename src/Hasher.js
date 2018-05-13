@@ -3,25 +3,21 @@
 const crypto = require('crypto');
 const fs = require('fs');
 
-const validHashes = [
-    'md5',
-    'sha256',
-    'sha512'
-];
+const validHashes = crypto.getHashes();
 
 class Hasher{
     constructor( hashType ){
         
-        //if( this.checkValidHash( hashType ) ){
+        if( this.checkValidHash( hashType ) ){
 
             this.hashType = hashType;
 
             this.hash = crypto.createHash( hashType );
-        //}
-        //else{
+        }
+        else{
 
-          //  throw new Error( 'Invalid hash type passed to Hasher constructor', 'Hasher.js' );
-        //}
+            throw new Error( 'Invalid hash type passed to Hasher constructor', 'Hasher.js' );
+        }
     }
 
     checkValidHash( input ){
