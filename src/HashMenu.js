@@ -27,6 +27,10 @@ class HashMenu{
         this.createAddlMenuOptions( );
     }
 
+    updateAppMenu(){
+        document.getElementById( 'selected-ciphers' ).innerHTML = this.enabledItems.length + ' selected';
+    }
+
     renderEnabledItems(){
 
         this.enabledItemsRendered = '';
@@ -37,6 +41,8 @@ class HashMenu{
             
             this.enabledItemsRendered += '<li>' + e + '</li>'
         } );
+
+        this.updateAppMenu();
 
         return this.enabledItemsRendered = '<ul>' + this.enabledItemsRendered + '</ul>';
     }
@@ -73,16 +79,18 @@ class HashMenu{
             return this.menuItems.push( e );
         } );
 
+        this.menuItems.sort( (a, b) => a.localeCompare(b) );
+
         this.menuItems.forEach( ( e, i, arr ) => {
             
             if( this.defaultMenuItems.indexOf( e ) !== -1 ){
 
                 //item is a default
-                this.menuItemsRendered += '<label><input type="checkbox" checked="checked" value="' + e + '" /> ' + e + '</label>'
+                this.menuItemsRendered += '<div class="cell"><div class="card"><div class="card-section"><label><input type="checkbox" checked="checked" value="' + e + '" /> ' + e + '</label></div></div></div>'
             }
             else{
 
-                this.menuItemsRendered += '<label><input type="checkbox" value="' + e + '" /> ' + e + '</label>'
+                this.menuItemsRendered += '<div class="cell"><div class="card"><div class="card-section"><label><input type="checkbox" value="' + e + '" /> ' + e + '</label></div></div></div>'
             }
         } );
     }

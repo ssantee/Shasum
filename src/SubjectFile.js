@@ -5,7 +5,7 @@ var lastID = 0;
 
 class SubjectFile{
 
-    constructor( filePath, objSectionMarker, renderCallback ){
+    constructor( filePath, objSectionMarker, renderCallback, abortCallback ){
 
         this.id = lastID + 1;
 
@@ -19,6 +19,8 @@ class SubjectFile{
         this.hashes = {};
 
         this.renderCallback = renderCallback;
+
+        this.abortCallback = abortCallback;
     }
 
     renderType(){
@@ -29,6 +31,11 @@ class SubjectFile{
     renderHash( type ){
 
         this.renderCallback( this, type );
+    }
+
+    abortRender(){
+        
+        this.abortCallback( this );
     }
 
     addHash( results, type ){

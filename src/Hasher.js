@@ -53,7 +53,11 @@ class Hasher{
 
         input.on( 'error', ( err ) => {
 
-            throw new Error( err );
+            file.abortRender( err );
+
+            console.log(err);
+
+            //throw new Error( err );
         } );
     }
 }

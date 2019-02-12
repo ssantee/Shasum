@@ -3,7 +3,6 @@
 // All of the Node.js APIs are available in this process.
 
 const electron = require('electron')
-
 const Hasher = require( './build/Hasher' );
 const SubjectFile = require( './build/SubjectFile' );
 const HashMenu = require( './build/HashMenu' );
@@ -63,6 +62,34 @@ const renderHash = function( fileObj, typeOfHash ){
     var outputEl = document.querySelector( fileObj.hashes[ typeOfHash ].uiselector );
 
     outputEl.innerHTML = fileObj.hashes[ typeOfHash ].hash;
+};
+
+const uiError = function( err ){
+
+    document.querySelector( '#output' ).innerHTML = '<div id="errors">' + err + '</div>';
+};
+
+const clearErrors = function(){
+
+    var errEl = document.querySelector( '#errors' );
+
+    if( errEl !== null ){
+
+        errEl.parentElement.removeChild( errEl );
+    }
+};
+
+const abortHash = function( fileObj ){
+    
+    var outputEl = document.querySelector( '#' + fileObj.uiselector );
+
+    if( outputEl !== null ){
+
+        outputEl.parentElement.removeChild( outputEl );
+    }
+
+    //the only error that can cause this condition atm
+    uiError( 'Doh! It only works on files, not directories...' );
 };
 
 const getRelatedFileObj = function( sectionId ){
@@ -150,11 +177,13 @@ document.addEventListener('drop', function ( e ) {
     e.preventDefault();
     e.stopPropagation();
 
+    clearErrors();
+
     for ( let f of e.dataTransfer.files ) {
 
-        console.log( 'File(s) you dragged here: ', f.path )
+        console.log( 'File(s) you dragged here: ', f.path );
   
-        const subjectFile = new SubjectFile( f.path, objSectionMarker, renderHash );
+        const subjectFile = new SubjectFile( f.path, objSectionMarker, renderHash, abortHash );
 
         var enabledItems = menu.getEnabledItems();
 

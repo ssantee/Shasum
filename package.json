@@ -8,14 +8,13 @@
     "build": "babel src --out-dir build --source-maps inline"
   },
   "repository": "",
-  "keywords": [
-    
-  ],
+  "keywords": [],
   "author": "Steven Santee",
   "license": "",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "electron": "^1.8.4"
-  }
+  },
+  "dependencies": {}
 }
