@@ -169,7 +169,7 @@ const setupDisplay = function( fileObj, hashItems ){
 
     var content = document.getElementById( 'output' ).innerHTML;
 
-    document.getElementById( 'output' ).innerHTML =  content + output;
+    document.getElementById( 'output' ).innerHTML =  output + content;
 };
 
 document.addEventListener('drop', function ( e ) {
@@ -200,6 +200,7 @@ document.addEventListener('drop', function ( e ) {
             myhasher.doHash( subjectFile );
         } );
         
+        jQuery('#menu-tabs').foundation('selectTab', jQuery('#panel1b'), true);
     } 
   });
 
