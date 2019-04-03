@@ -7,6 +7,7 @@ const Hasher = require( './build/Hasher' );
 const SubjectFile = require( './build/SubjectFile' );
 const HashMenu = require( './build/HashMenu' );
 const utils = require( './build/Utils' );
+const UI = require( './build/UI' );
 
 const objSectionMarker = 'obj-section-id-';
 
@@ -172,6 +173,8 @@ const setupDisplay = function( fileObj, hashItems ){
     document.getElementById( 'output' ).innerHTML =  output + content;
 };
 
+const myUi = new UI();
+
 document.addEventListener('drop', function ( e ) {
 
     e.preventDefault();
@@ -181,7 +184,7 @@ document.addEventListener('drop', function ( e ) {
 
     for ( let f of e.dataTransfer.files ) {
 
-        console.log( 'File(s) you dragged here: ', f.path );
+        console.log( 'File(s) you dragged here: ', f );
   
         const subjectFile = new SubjectFile( f.path, objSectionMarker, renderHash, abortHash );
 
@@ -208,3 +211,33 @@ document.addEventListener('drop', function ( e ) {
     e.preventDefault();
     e.stopPropagation();
   });
+
+  const selectDirBtn = document.getElementById('select-directory')
+
+  selectDirBtn.addEventListener('click', (event) => {
+    electron.ipcRenderer.send('open-file-dialog')
+  })
+  
+  electron.ipcRenderer.on('selected-directory', (event, path) => {
+
+    clearErrors();
+
+    const subjectFile = new SubjectFile( path[0], objSectionMarker, renderHash, abortHash );
+
+    var enabledItems = menu.getEnabledItems();
+
+    setupDisplay( subjectFile, enabledItems );
+
+    //subjectFile.setHashes( Hasher, renderHash );
+
+    fileObjects.push( subjectFile );
+
+    enabledItems.forEach( ( hashType )=>{
+
+        let myhasher = new Hasher( hashType );
+        
+        myhasher.doHash( subjectFile );
+    } );
+    
+    jQuery('#menu-tabs').foundation('selectTab', jQuery('#panel1b'), true);
+  })

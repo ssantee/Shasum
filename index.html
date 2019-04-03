@@ -41,22 +41,26 @@
         </div>
         <div class="cell medium-auto medium-cell-block-container" id="main-content" style="overflow: scroll;">
             <div id="tabs-body" class="tabs-content" data-tabs-content="menu-tabs">
-                <div class="tabs-panel is-active grid-y" id="panel1v">
+                <div class="tabs-panel is-active grid-y padded-tab" id="panel1v">
                     <div id="splash" class="header-text">
                         <div id="holder">
                             Drop files anywhere<br> or
                         </div>
                         <div id="picker">
-                            <button type="button" class="button">Choose File</button>
+                            <button type="button" class="button" id="select-directory">Choose File</button>
                         </div>
                     </div>
                 </div>
-                <div class="tabs-panel is-active grid-y" id="panel1b">
+                <div class="tabs-panel grid-y" id="panel1b">
+                    <div class="results-toolbox">
+                        <button type="button" class="button">Export Results</button>
+                        <button type="button" class="alert button" id="clear-result">Clear Results</button> 
+                    </div>
                     <div id="output">
                 
                     </div>
                 </div>
-                <div class="tabs-panel" id="panel2v">
+                <div class="tabs-panel padded-tab" id="panel2v">
                     <div class="grid-container">
                         <div class="app-menu menu grid-x grid-padding-x" id="app-menu">
                             
@@ -64,18 +68,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="tabs-panel" id="panel4v">
+                <div class="tabs-panel padded-tab" id="panel4v">
                     <div class="todo">
                         <ul>
                             <li>npm start</li>
                             <li>File Picker</li>
                             <li>branding</li>
-                            <li>make 'home' a separate screen, auto-jump to results after drag/drop</li>
+                            <li class="done">make 'home' a separate screen, auto-jump to results after drag/drop</li>
                             <li>How to handle directory?</li>
                             <li class="done">equality check on generated and provided checksum</li>
                             <li>Export results to plaintext</li>
                             <li>export to HTML</li>
-                            <li>clear button</li>
+                            <li class="done">clear button</li>
                             <li class="done">Let hash types be picked in the UI, from available list on OS<br> openssl list-message-digest-algorithms<br>
                                 console.log(crypto.getHashes())<br>
                                 https://stackoverflow.com/questions/14168703/crypto-algorithm-list
@@ -83,7 +87,7 @@
                             <li class="done">sort available ciphers case-insensitive</li>
                             <li>rethinkg layout 
                                 <ul>
-                                    <li>
+                                    <li class="done">
                                         - cipher picker should be shown on demand, ie behind menu
                                     </li>
                                     <li></li>
