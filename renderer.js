@@ -39,13 +39,14 @@ const menuHandler = function( event ){
     if( target.checked ){
 
         var renderedEnabled = menu.addEnabledItem( val );
-
-        document.getElementById( 'app-menu-enabled' ).innerHTML = renderedEnabled;
+        //this adds the list of the selected algos to the left menu, removing for now
+        //document.getElementById( 'app-menu-enabled' ).innerHTML = renderedEnabled;
     }
     else{
 
         //already in enabled items, remove
-        document.getElementById( 'app-menu-enabled' ).innerHTML = menu.disableItem( val );
+        //document.getElementById( 'app-menu-enabled' ).innerHTML = menu.disableItem( val );
+        menu.disableItem( val );
     }
 };
 
@@ -53,8 +54,8 @@ for( var x = 0; x < menuOpts.length; x++ ){
 
     menuOpts[x].addEventListener( 'change', menuHandler );
 }
-
-document.getElementById( 'app-menu-enabled' ).innerHTML = menu.renderEnabledItems();
+//this adds the list of the selected algos to the left menu, removing for now
+//document.getElementById( 'app-menu-enabled' ).innerHTML = menu.renderEnabledItems();
 
 var fileObjects = [];
 
@@ -203,7 +204,7 @@ document.addEventListener('drop', function ( e ) {
             myhasher.doHash( subjectFile );
         } );
         
-        jQuery('#menu-tabs').foundation('selectTab', jQuery('#panel1b'), true);
+        jQuery('#menu-tabs').foundation('selectTab', jQuery('#panel-results'), true);
     } 
   });
 
@@ -239,5 +240,5 @@ document.addEventListener('drop', function ( e ) {
         myhasher.doHash( subjectFile );
     } );
     
-    jQuery('#menu-tabs').foundation('selectTab', jQuery('#panel1b'), true);
+    jQuery('#menu-tabs').foundation('selectTab', jQuery('#panel-results'), true);
   })

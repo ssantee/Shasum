@@ -25,23 +25,21 @@
 
             <div class="menu menu-top-level">
                 <ul class="vertical tabs" data-tabs id="menu-tabs">
-                    <li class="tabs-title is-active"><a href="#panel1v" aria-selected="true">Home</a></li>
-                    <li class="tabs-title"><a href="#panel1b">Results</a></li>
-                    <li class="tabs-title"><a href="#panel2v">Ciphers <span id="selected-ciphers"></span></a></li>
-                   <!-- <li class="tabs-title"><a href="#panel3v">History</a></li>
-                    <li class="tabs-title"><a href="#panel4v">Export</a></li>
-                    <li class="tabs-title"><a href="#panel4v">Contact</a></li>-->
-                    <li class="tabs-title"><a href="#panel4v">TODO</a></li>
+                    <li class="tabs-title is-active"><a href="#panel-home" aria-selected="true">Home</a></li>
+                    <li class="tabs-title"><a href="#panel-results">Results</a></li>
+                    <li class="tabs-title"><a href="#panel-ciphers">Ciphers <span id="selected-ciphers"></span></a></li>
+                    <li class="tabs-title"><a href="#panel-export">Export</a></li>
+                    <li class="tabs-title"><a href="#panel-history">History</a></li>
+                    <li class="tabs-title"><a href="#panel-todo">TODO</a></li>
                 </ul>
             </div>
 
-            
             <div class="app-menu menu" id="app-menu-enabled">
             </div> 
         </div>
         <div class="cell medium-auto medium-cell-block-container" id="main-content" style="overflow: scroll;">
             <div id="tabs-body" class="tabs-content" data-tabs-content="menu-tabs">
-                <div class="tabs-panel is-active grid-y padded-tab" id="panel1v">
+                <div class="tabs-panel is-active grid-y padded-tab" id="panel-home">
                     <div id="splash" class="header-text">
                         <div id="holder">
                             Drop files anywhere<br> or
@@ -51,16 +49,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="tabs-panel grid-y" id="panel1b">
+                <div class="tabs-panel grid-y" id="panel-results">
                     <div class="results-toolbox">
-                        <button type="button" class="button">Export Results</button>
+                        
                         <button type="button" class="alert button" id="clear-result">Clear Results</button> 
                     </div>
                     <div id="output">
                 
                     </div>
                 </div>
-                <div class="tabs-panel padded-tab" id="panel2v">
+                <div class="tabs-panel grid-y" id="panel-export">
+                    <div class="results-toolbox">
+                        <button type="button" class="button">Export Results</button>
+                        
+                    </div>
+                    <div id="output">
+                
+                    </div>
+                </div>
+                <div class="tabs-panel padded-tab" id="panel-ciphers">
                     <div class="grid-container">
                         <div class="app-menu menu grid-x grid-padding-x" id="app-menu">
                             
@@ -68,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tabs-panel padded-tab" id="panel4v">
+                <div class="tabs-panel padded-tab" id="panel-todo">
                     <div class="todo">
                         <ul>
                             <li>npm start</li>
@@ -85,7 +92,7 @@
                                 https://stackoverflow.com/questions/14168703/crypto-algorithm-list
                             </li>
                             <li class="done">sort available ciphers case-insensitive</li>
-                            <li>rethinkg layout 
+                            <li class="done">rethink layout 
                                 <ul>
                                     <li class="done">
                                         - cipher picker should be shown on demand, ie behind menu

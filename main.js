@@ -61,7 +61,7 @@ app.on('activate', function () {
 
 electron.ipcMain.on('open-file-dialog', (event) => {
     electron.dialog.showOpenDialog({
-      properties: ['openFile', 'openDirectory']
+      properties: ['openFile']
     }, (files) => {
       if (files) {
         event.sender.send('selected-directory', files)
