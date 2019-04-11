@@ -82,8 +82,8 @@ input{
 }
 
 .file--overflow--group{
-    overflow: scroll;
-    
+    overflow-x: scroll;
+
 }
 
 /* loading animations */
@@ -92,7 +92,7 @@ input{
     width: 100px;
     height: 6px;
     margin: 0 10px 10px 0;
-    
+
     border-radius: 5px;
     text-align: center;
     background-color: #d8d8d8;
@@ -111,7 +111,7 @@ input{
 
 @keyframes loadingJ {
   0%,100% {transform: translate(0,0);}
-  
+
   50% {
       transform: translate(80px,0);
       background-color: #f5634a;
@@ -164,7 +164,7 @@ h1{
 }
 
 .menu-top-level li.tabs-title.is-active{
-    background-color: #ffffff;    
+    background-color: #ffffff;
 }
 
 #selected-ciphers{
@@ -184,7 +184,7 @@ h1{
 }
 
 .tabs a{
-    color: #fff;  
+    color: #fff;
 }
 
 .tabs-title>a{
@@ -194,7 +194,7 @@ h1{
 .tabs-content{
     border: 0 none;
     height: 100vh;
-    
+
 }
 
 .tabs-panel{
@@ -220,7 +220,7 @@ h1{
 }
 
 #app-menu .card{
-    background-color: #F1F9FF; 
+    background-color: #F1F9FF;
     color: #707070;
 }
 
