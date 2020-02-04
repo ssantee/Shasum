@@ -9,6 +9,8 @@ const HashMenu = require( './build/HashMenu' );
 const utils = require( './build/Utils' );
 const UI = require( './build/UI' );
 
+const myUi = new UI();
+
 const objSectionMarker = 'obj-section-id-';
 
 const loading = `
@@ -27,35 +29,6 @@ var requiredHashes = [
 
 var menu = new HashMenu();
 
-document.getElementById( 'app-menu' ).innerHTML = menu.getRenderedMenuItems();
-
-var menuOpts = document.getElementById( 'app-menu' ).getElementsByTagName( 'input' );
-
-const menuHandler = function( event ){
-
-    var target = event.target,
-        val = target.value;
-
-    if( target.checked ){
-
-        var renderedEnabled = menu.addEnabledItem( val );
-
-        document.getElementById( 'app-menu-enabled' ).innerHTML = renderedEnabled;
-    }
-    else{
-
-        //already in enabled items, remove
-        document.getElementById( 'app-menu-enabled' ).innerHTML = menu.disableItem( val );
-    }
-};
-
-for( var x = 0; x < menuOpts.length; x++ ){
-
-    menuOpts[x].addEventListener( 'change', menuHandler );
-}
-
-document.getElementById( 'app-menu-enabled' ).innerHTML = menu.renderEnabledItems();
-
 var fileObjects = [];
 
 const renderHash = function( fileObj, typeOfHash ){
@@ -63,21 +36,6 @@ const renderHash = function( fileObj, typeOfHash ){
     var outputEl = document.querySelector( fileObj.hashes[ typeOfHash ].uiselector );
 
     outputEl.innerHTML = fileObj.hashes[ typeOfHash ].hash;
-};
-
-const uiError = function( err ){
-
-    document.querySelector( '#output' ).innerHTML = '<div id="errors">' + err + '</div>';
-};
-
-const clearErrors = function(){
-
-    var errEl = document.querySelector( '#errors' );
-
-    if( errEl !== null ){
-
-        errEl.parentElement.removeChild( errEl );
-    }
 };
 
 const abortHash = function( fileObj ){
@@ -90,7 +48,7 @@ const abortHash = function( fileObj ){
     }
 
     //the only error that can cause this condition atm
-    uiError( 'Doh! It only works on files, not directories...' );
+    myUi.uiError( 'Doh! It only works on files, not directories...' );
 };
 
 const getRelatedFileObj = function( sectionId ){
@@ -173,56 +131,9 @@ const setupDisplay = function( fileObj, hashItems ){
     document.getElementById( 'output' ).innerHTML =  output + content;
 };
 
-const myUi = new UI();
+const hashAndDisplayOutput = function( path ){
 
-document.addEventListener('drop', function ( e ) {
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    clearErrors();
-
-    for ( let f of e.dataTransfer.files ) {
-
-        console.log( 'File(s) you dragged here: ', f );
-  
-        const subjectFile = new SubjectFile( f.path, objSectionMarker, renderHash, abortHash );
-
-        var enabledItems = menu.getEnabledItems();
-
-        setupDisplay( subjectFile, enabledItems );
-
-        //subjectFile.setHashes( Hasher, renderHash );
-
-        fileObjects.push( subjectFile );
-
-        enabledItems.forEach( ( hashType )=>{
-
-            let myhasher = new Hasher( hashType );
-            
-            myhasher.doHash( subjectFile );
-        } );
-        
-        jQuery('#menu-tabs').foundation('selectTab', jQuery('#panel1b'), true);
-    } 
-  });
-
-  document.addEventListener('dragover', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-  });
-
-  const selectDirBtn = document.getElementById('select-directory')
-
-  selectDirBtn.addEventListener('click', (event) => {
-    electron.ipcRenderer.send('open-file-dialog')
-  })
-  
-  electron.ipcRenderer.on('selected-directory', (event, path) => {
-
-    clearErrors();
-
-    const subjectFile = new SubjectFile( path[0], objSectionMarker, renderHash, abortHash );
+    const subjectFile = new SubjectFile( path, objSectionMarker, renderHash, abortHash );
 
     var enabledItems = menu.getEnabledItems();
 
@@ -239,5 +150,39 @@ document.addEventListener('drop', function ( e ) {
         myhasher.doHash( subjectFile );
     } );
     
-    jQuery('#menu-tabs').foundation('selectTab', jQuery('#panel1b'), true);
-  })
+    myUi.showResultsTab( jQuery );
+};
+
+document.addEventListener('drop', function ( e ) {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    myUi.clearErrors();
+
+    for ( let f of e.dataTransfer.files ) {
+
+        console.log( 'File(s) you dragged here: ', f );
+
+        hashAndDisplayOutput( f.path );
+    } 
+});
+
+document.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+});
+
+const selectDirBtn = document.getElementById('select-directory')
+
+selectDirBtn.addEventListener('click', (event) => {
+
+    electron.ipcRenderer.send('open-file-dialog')
+});
+
+electron.ipcRenderer.on('selected-directory', (event, path) => {
+
+    myUi.clearErrors();
+
+    hashAndDisplayOutput( path[0] );
+});
