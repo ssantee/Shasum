@@ -25,6 +25,17 @@ class HashMenu{
         this.menuItemsRendered = '';
 
         this.createAddlMenuOptions( );
+
+        document.getElementById( 'app-menu' ).innerHTML = this.getRenderedMenuItems();
+
+        var menuOpts = document.getElementById( 'app-menu' ).getElementsByTagName( 'input' );
+
+        for( var x = 0; x < menuOpts.length; x++ ){
+
+            menuOpts[x].addEventListener( 'change', this.menuHandler.bind( this ) );
+        }
+
+        document.getElementById( 'app-menu-enabled' ).innerHTML = this.renderEnabledItems();
     }
 
     updateAppMenu(){
@@ -98,6 +109,24 @@ class HashMenu{
     getRenderedMenuItems(){
 
         return this.menuItemsRendered;
+    }
+
+    menuHandler ( event ){
+
+        var target = event.target,
+            val = target.value;
+    
+        if( target.checked ){
+    
+            var renderedEnabled = this.addEnabledItem( val );
+    
+            document.getElementById( 'app-menu-enabled' ).innerHTML = renderedEnabled;
+        }
+        else{
+    
+            //already in enabled items, remove
+            document.getElementById( 'app-menu-enabled' ).innerHTML = this.disableItem( val );
+        }
     }
 
 }
