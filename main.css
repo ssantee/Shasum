@@ -231,8 +231,8 @@ h1{
 }
 
 #app-menu .cell{
-    width: 200px;
-    height: 130px;
+    width: 225px;
+    height: 64px;
     display: flex;
     padding-left:.46rem;
     padding-right:.46rem;
@@ -245,10 +245,11 @@ h1{
 
 #app-menu .card label{
     color: #707070;
+    align-self: center;
 }
 
 #app-menu .card-section{
-    padding: 0;
+    padding: 0 1em;
     display: flex;
 }
 
