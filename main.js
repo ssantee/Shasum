@@ -7,8 +7,7 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
-let iconImage = 'X.png';
-app.dock.setIcon( iconImage );
+app.dock.setIcon('X.png')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -16,7 +15,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1000, height: 600})
+  mainWindow = new BrowserWindow({ width: 1000, height: 600 })
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -63,11 +62,11 @@ app.on('activate', function () {
 // code. You can also put them in separate files and require them here.
 
 electron.ipcMain.on('open-file-dialog', (event) => {
-    electron.dialog.showOpenDialog({
-      properties: ['openFile']
-    }, (files) => {
-      if (files) {
-        event.sender.send('selected-directory', files)
-      }
-    })
+  electron.dialog.showOpenDialog({
+    properties: ['openFile']
+  }, (files) => {
+    if (files) {
+      event.sender.send('selected-directory', files)
+    }
+  })
 })

@@ -1,58 +1,41 @@
-'use strict';
+'use strict'
 
-const fs = require('fs');
-var lastID = 0;
+// const fs = require('fs')
+let lastID = 0
 
-class SubjectFile{
+class SubjectFile {
+  constructor (filePath, objSectionMarker, renderCallback, abortCallback) {
+    this.id = lastID + 1
+    lastID = this.id
+    // check validity?
+    this.filePath = filePath
+    this.uiselector = objSectionMarker + this.id
+    this.hashes = {}
+    this.renderCallback = renderCallback
+    this.abortCallback = abortCallback
+  }
 
-    constructor( filePath, objSectionMarker, renderCallback, abortCallback ){
+  renderType () {
+    this.renderCallback(this)
+  }
 
-        this.id = lastID + 1;
+  renderHash (type) {
+    this.renderCallback(this, type)
+  }
 
-        lastID = this.id;
+  abortRender () {
+    this.abortCallback(this)
+  }
 
-        //check validity?
-        this.filePath = filePath;
+  addHash (results, type) {
+    this.hashes[type] = this.hashes[type] || {}
+    this.hashes[type].hash = results
+    this.hashes[type].uiselector = '#' + this.uiselector + ' .file--' + type
+    this.renderHash(type)
+  }
 
-        this.uiselector = objSectionMarker + this.id;
-
-        this.hashes = {};
-
-        this.renderCallback = renderCallback;
-
-        this.abortCallback = abortCallback;
-    }
-
-    renderType(){
-
-        this.renderCallback( this );
-    }
-
-    renderHash( type ){
-
-        this.renderCallback( this, type );
-    }
-
-    abortRender(){
-        
-        this.abortCallback( this );
-    }
-
-    addHash( results, type ){
-
-        this.hashes[ type ] = this.hashes[ type ] || {};
-
-        this.hashes[ type ].hash = results;
-
-        this.hashes [ type ].uiselector = '#' + this.uiselector + ' .file--' + type;
-
-        this.renderHash( type );
-    }
-
-    compareHashTo( inputHash, objectId ){
-
-        return ;
-    }
+  compareHashTo (inputHash, objectId) {
+  }
 }
 
-module.exports = SubjectFile;
+module.exports = SubjectFile

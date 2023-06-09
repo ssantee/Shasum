@@ -1,65 +1,46 @@
-'use strict';
+'use strict'
 
-const crypto = require('crypto');
-const fs = require('fs');
+const crypto = require('crypto')
+const fs = require('fs')
 
-const validHashes = crypto.getHashes();
+const validHashes = crypto.getHashes()
 
-class Hasher{
-    constructor( hashType ){
-        
-        if( this.checkValidHash( hashType ) ){
-
-            this.hashType = hashType;
-
-            this.hash = crypto.createHash( hashType );
-        }
-        else{
-
-            throw new Error( 'Invalid hash type passed to Hasher constructor', 'Hasher.js' );
-        }
+class Hasher {
+  constructor (hashType) {
+    if (this.checkValidHash(hashType)) {
+      this.hashType = hashType
+      this.hash = crypto.createHash(hashType)
+    } else {
+      throw new Error('Invalid hash type passed to Hasher constructor', 'Hasher.js')
     }
+  }
 
-    checkValidHash( input ){
-
-        if( validHashes.indexOf( input ) !== -1 ){
-
-            return true;
-        }
-
-        return false;
+  checkValidHash (input) {
+    if (validHashes.indexOf(input) !== -1) {
+      return true
     }
+    return false
+  }
 
-    doHash( file ){
+  doHash (file) {
+    const input = fs.createReadStream(file.filePath)
+    let rhash
+    input.on('readable', () => {
+      const data = input.read()
+      if (data) {
+        this.hash.update(data)
+      } else {
+        rhash = this.hash.digest('hex')
 
-        const input = fs.createReadStream( file.filePath );
-        var rhash;
-        
-        input.on('readable', ( ) => {
+        file.addHash(rhash, this.hashType)
+      }
+    })
 
-            const data = input.read();
-            
-            if (data){
-
-                this.hash.update(data);
-            }
-            else {
-
-                rhash = this.hash.digest('hex');
-
-                file.addHash( rhash, this.hashType );
-            }
-        });
-
-        input.on( 'error', ( err ) => {
-
-            file.abortRender( err );
-
-            console.log(err);
-
-            //throw new Error( err );
-        } );
-    }
+    input.on('error', (err) => {
+      file.abortRender(err)
+      console.log(err)
+    })
+  }
 }
 
-module.exports = Hasher;
+module.exports = Hasher
